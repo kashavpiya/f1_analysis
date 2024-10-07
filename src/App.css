@@ -24,7 +24,9 @@ canvas {
 }
 
 button {
-  padding: 10px 15px;
+  width: 150px; /* Fixed width */
+  height: 40px; /* Fixed height */
+  padding: 10px 15px; /* Padding for inner content */
   border: none;
   border-radius: 5px;
   background-color: #6200ea; /* Dark purple button */

@@ -4,6 +4,7 @@ import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import './DriverLapAnalysis.css';
 import Loader from './Loader'; // Assuming you create a loader component
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const DriverLapAnalysis = () => {
     const [lapData, setLapData] = useState(null);
@@ -110,10 +111,23 @@ const LapDataDisplay = ({ label, lapData, chartData }) => (
         <h2>Lap {lapData.lap_number - 1}</h2>
         <p>{label}</p>
         <p>Total Lap Duration: {lapData.lap_duration}s</p>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <div className="chart-container">
             <Bar
                 data={chartData}
                 options={{
+                    responsive: true, // Allow responsiveness
+                    maintainAspectRatio: false, // Prevent default aspect ratio behavior
+                    plugins: {
+                        tooltip: {
+                            enabled: false, // Disable tooltips
+                        },
+                        datalabels: {
+                            color: 'white', // Text color for data labels
+                            anchor: 'end',
+                            align: 'end',
+                            formatter: (value) => `${value}s`, // Format the label text
+                        },
+                    },
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -123,17 +137,13 @@ const LapDataDisplay = ({ label, lapData, chartData }) => (
                             },
                         },
                     },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}s`,
-                            },
-                        },
-                    },
                 }}
+                plugins={[ChartDataLabels]} // Register the plugin
             />
         </div>
     </div>
 );
+
+
 
 export default DriverLapAnalysis;
