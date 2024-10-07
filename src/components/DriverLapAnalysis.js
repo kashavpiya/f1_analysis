@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getLatestRace, getDriverLapData } from '../services/api';
+import { getLatestSession, getDriverLapData } from '../services/api';
 import Chart from 'chart.js/auto';
 
 const DriverLapAnalysis = ({ driverId }) => {
@@ -8,7 +8,7 @@ const DriverLapAnalysis = ({ driverId }) => {
 
   useEffect(() => {
     const fetchLatestRace = async () => {
-      const race = await getLatestRace();
+      const race = await getLatestSession();
       setLatestRace(race);
       const data = await getDriverLapData(driverId);
       setLapData(data);
