@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://api.openf1.org';
 
 // Get latest race
 export const getLatestRace = async () => {
-  const response = await axios.get(`${API_URL}/latest-race`);
-  return response.data;
+  const response = await axios.get(`${API_URL}/races?limit=1&sort=-date`);
+  return response.data[0];
 };
 
-// Get lap data for specific driver in the latest race
 export const getDriverLapData = async (driverId) => {
-  const response = await axios.get(`${API_URL}/latest-race/driver/${driverId}`);
+  const latestRace = await getLatestRace();
+  const response = await axios.get(`${API_URL}/races/${latestRace.id}/laps?driver=${driverId}`);
   return response.data;
 };

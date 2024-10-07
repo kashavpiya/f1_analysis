@@ -10,19 +10,11 @@ const DriverLapAnalysis = ({ driverId }) => {
     const fetchLatestRace = async () => {
       const race = await getLatestRace();
       setLatestRace(race);
+      const data = await getDriverLapData(driverId);
+      setLapData(data);
     };
     fetchLatestRace();
-  }, []);
-
-  useEffect(() => {
-    if (latestRace) {
-      const fetchLapData = async () => {
-        const data = await getDriverLapData(driverId);
-        setLapData(data);
-      };
-      fetchLapData();
-    }
-  }, [latestRace, driverId]);
+  }, [driverId]);
 
   const plotGraph = (data) => {
     const ctx = document.getElementById('lapChart').getContext('2d');
@@ -32,7 +24,7 @@ const DriverLapAnalysis = ({ driverId }) => {
         labels: data.map((lap) => lap.lapNumber),
         datasets: [{
           label: 'Speed (km/h)',
-          data: data.map((lap) => lap.speed), // Adjust based on API data
+          data: data.map((lap) => lap.speed),
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 2
         }]
@@ -57,4 +49,3 @@ const DriverLapAnalysis = ({ driverId }) => {
 };
 
 export default DriverLapAnalysis;
- 
