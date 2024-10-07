@@ -22,3 +22,35 @@
     width: 100%; /* Ensures the chart takes the full width of its parent */
     height: 300px; /* Fixed height */
 }
+
+
+.driver-selection {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.dropdown {
+    padding: 5px;
+    font-size: 16px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.compare-btn {
+    background-color: #36a2eb;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.compare-btn:hover {
+    background-color: #2795d9;
+}

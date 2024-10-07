@@ -6,16 +6,44 @@ import './DriverLapAnalysis.css';
 import Loader from './Loader'; // Assuming you create a loader component
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
+const drivers = [
+    { id: 1, name: "Max Verstappen" },
+    { id: 11, name: "Sergio Perez"},
+    { id: 4, name: "Lando Norris" },
+    { id: 81, name: "Oscar Piastri"},
+    { id: 44, name: "Lewis Hamilton" },
+    { id: 63, name: "George Russell" },
+    { id: 16, name: "Charles Leclerc" },
+    { id: 55, name: "Carlos Sainz Jr" },
+    { id: 14, name: "Fernando Alonso" },
+    { id: 18, name: "Lance Stroll" },
+    { id: 23, name: "Alex Albon" },
+    { id: 43, name: "Franco Colapinto" },
+    { id: 3, name: "Daniel Ricciardo" },
+    { id: 22, name: "Yuki Tsunoda" },
+    { id: 24, name: "Guanyu Zhou" },
+    { id: 77, name: "Valtteri Bottas" },
+    { id: 20, name: "Kevin Magnussen" },
+    { id: 27, name: "Nico Hülkenberg" },
+    { id: 10, name: "Pierre Gasly" },
+    { id: 31, name: "Esteban Ocon" },
+    
+];
+
 const DriverLapAnalysis = () => {
-    const [lapData, setLapData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [lapDataDriver1, setLapDataDriver1] = useState(null);
+    const [loadingDriver1, setLoadingDriver1] = useState(true);
+    const [errorDriver1, setErrorDriver1] = useState(null);
+
+    const [lapDataDriver2, setLapDataDriver2] = useState(null);
+    const [loadingDriver2, setLoadingDriver2] = useState(true);
+    const [errorDriver2, setErrorDriver2] = useState(null);
+
     const [currentLap, setCurrentLap] = useState(2);
-    const [error, setError] = useState(null);
+    const [selectedDriver1, setSelectedDriver1] = useState(drivers[0].id);
+    const [selectedDriver2, setSelectedDriver2] = useState(drivers[1].id);
 
-    const [lapDataNorris, setLapDataNorris] = useState(null);
-    const [loadingNorris, setLoadingNorris] = useState(true);
-    const [errorNorris, setErrorNorris] = useState(null);
-
+    // Fetch lap data for the selected driver
     const fetchLapData = async (driverId, setLapData, setLoading, setError) => {
         try {
             const result = await getDriverLapData(driverId, currentLap);
@@ -40,15 +68,16 @@ const DriverLapAnalysis = () => {
     };
 
     useEffect(() => {
-        setLoading(true);
-        setLoadingNorris(true);
-        setError(null);
-        setErrorNorris(null);
+        setLoadingDriver1(true);
+        setLoadingDriver2(true);
+        setErrorDriver1(null);
+        setErrorDriver2(null);
         
-        fetchLapData(1, setLapData, setLoading, setError);
-        fetchLapData(4, setLapDataNorris, setLoadingNorris, setErrorNorris);
-    }, [currentLap]);
+        fetchLapData(selectedDriver1, setLapDataDriver1, setLoadingDriver1, setErrorDriver1);
+        fetchLapData(selectedDriver2, setLapDataDriver2, setLoadingDriver2, setErrorDriver2);
+    }, [currentLap, selectedDriver1, selectedDriver2]);
 
+    // Chart data for displaying lap durations
     const chartData = (data, label) => ({
         labels: ['Sector 1', 'Sector 2', 'Sector 3'],
         datasets: [
@@ -64,38 +93,75 @@ const DriverLapAnalysis = () => {
         ],
     });
 
+    // Handle lap navigation
     const handleLapChange = (increment) => {
         setCurrentLap((prevLap) => Math.max(prevLap + increment, 1));
     };
 
+    
+    // Handle driver selection changes
+    const handleDriver1Change = (event) => {
+        setSelectedDriver1(Number(event.target.value));
+    };
+
+    const handleDriver2Change = (event) => {
+        setSelectedDriver2(Number(event.target.value));
+    };
+
     return (
         <div className="driver-lap-analysis">
+             <div className="driver-selection">
+                <label>Select Driver 1: </label>
+                <select value={selectedDriver1} onChange={handleDriver1Change} className="dropdown">
+                    {drivers.map(driver => (
+                        <option key={driver.id} value={driver.id}>{driver.name}</option>
+                    ))}
+                </select>
+
+                <label>Select Driver 2: </label>
+                <select value={selectedDriver2} onChange={handleDriver2Change} className="dropdown">
+                    {drivers.map(driver => (
+                        <option key={driver.id} value={driver.id}>{driver.name}</option>
+                    ))}
+                </select>
+
+            </div>
+
             <div className="lap-comparison">
                 <div className="driver-section">
-                    {loading ? (
+                    {loadingDriver1 ? (
                         <Loader />
-                    ) : error ? (
-                        <p>{error}</p>
-                    ) : lapData ? (
-                        <LapDataDisplay label="Max Verstappen" lapData={lapData} chartData={chartData(lapData, "Max Verstappen")} />
+                    ) : errorDriver1 ? (
+                        <p>{errorDriver1}</p>
+                    ) : lapDataDriver1 ? (
+                        <LapDataDisplay
+                            label={drivers.find(d => d.id === selectedDriver1).name}
+                            lapData={lapDataDriver1}
+                            chartData={chartData(lapDataDriver1, drivers.find(d => d.id === selectedDriver1).name)}
+                        />
                     ) : (
                         <p>No lap data available.</p>
                     )}
                 </div>
                 <div className="driver-section">
-                    {loadingNorris ? (
+                    {loadingDriver2 ? (
                         <Loader />
-                    ) : errorNorris ? (
-                        <p>{errorNorris}</p>
-                    ) : lapDataNorris ? (
-                        <LapDataDisplay label="Lando Norris" lapData={lapDataNorris} chartData={chartData(lapDataNorris, "Lando Norris")} />
+                    ) : errorDriver2 ? (
+                        <p>{errorDriver2}</p>
+                    ) : lapDataDriver2 ? (
+                        <LapDataDisplay
+                            label={drivers.find(d => d.id === selectedDriver2).name}
+                            lapData={lapDataDriver2}
+                            chartData={chartData(lapDataDriver2, drivers.find(d => d.id === selectedDriver2).name)}
+                        />
                     ) : (
                         <p>No lap data available.</p>
                     )}
                 </div>
             </div>
+
             <div className="lap-navigation">
-                <button onClick={() => handleLapChange(-1)} disabled={currentLap <= 1}>
+                <button onClick={() => handleLapChange(-1)} disabled={currentLap-1 <= 1}>
                     Previous Lap
                 </button>
                 <button onClick={() => handleLapChange(1)} style={{ marginLeft: '10px' }}>
@@ -115,35 +181,28 @@ const LapDataDisplay = ({ label, lapData, chartData }) => (
             <Bar
                 data={chartData}
                 options={{
-                    responsive: true, // Allow responsiveness
-                    maintainAspectRatio: false, // Prevent default aspect ratio behavior
+                    responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
-                        tooltip: {
-                            enabled: false, // Disable tooltips
-                        },
+                        tooltip: { enabled: false },
                         datalabels: {
-                            color: 'white', // Text color for data labels
+                            color: 'white',
                             anchor: 'end',
                             align: 'end',
-                            formatter: (value) => `${value}s`, // Format the label text
+                            formatter: (value) => `${value}s`,
                         },
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Duration (s)',
-                            },
+                            title: { display: true, text: 'Duration (s)' },
                         },
                     },
                 }}
-                plugins={[ChartDataLabels]} // Register the plugin
+                plugins={[ChartDataLabels]}
             />
         </div>
     </div>
 );
-
-
 
 export default DriverLapAnalysis;
