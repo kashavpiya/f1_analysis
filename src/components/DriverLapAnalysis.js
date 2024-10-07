@@ -125,10 +125,6 @@ const DriverLapAnalysis = () => {
 
     const comparison = calculateComparison();
 
-    const driver1Name = drivers.find(d => d.id === lapDataDriver1.driverId)?.name || 'Unknown Driver';
-    const driver2Name = drivers.find(d => d.id === lapDataDriver2.driverId)?.name || 'Unknown Driver';
-
-
     return (
         <div className="driver-lap-analysis">
              <div className="driver-selection">
