@@ -1,0 +1,45 @@
+.driver-lap-analysis {
+    text-align: center;
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+}
+
+.lap-comparison {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    margin-bottom: 20px;
+}
+
+.driver-section {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    width: calc(50% - 20px); /* Make the sections responsive */
+    margin: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+h1, h2 {
+    color: #ffffff;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6200ea;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:disabled {
+    background-color: #555;
+}
+
+button:hover:not(:disabled) {
+    background-color: #3700b3;
+}
