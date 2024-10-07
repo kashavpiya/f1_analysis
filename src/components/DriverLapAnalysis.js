@@ -110,6 +110,25 @@ const DriverLapAnalysis = () => {
         setSelectedDriver2(Number(event.target.value));
     };
 
+    const calculateComparison = () => {
+        if (!lapDataDriver1 || !lapDataDriver2) return null;
+
+        const comparison = {
+            sector1: (lapDataDriver1.duration_sector_1 - lapDataDriver2.duration_sector_1).toFixed(3),
+            sector2: (lapDataDriver1.duration_sector_2 - lapDataDriver2.duration_sector_2).toFixed(3),
+            sector3: (lapDataDriver1.duration_sector_3 - lapDataDriver2.duration_sector_3).toFixed(3),
+            total: (lapDataDriver1.lap_duration - lapDataDriver2.lap_duration).toFixed(3),
+        };
+
+        return comparison;
+    };
+
+    const comparison = calculateComparison();
+
+    const driver1Name = drivers.find(d => d.id === lapDataDriver1.driverId)?.name || 'Unknown Driver';
+    const driver2Name = drivers.find(d => d.id === lapDataDriver2.driverId)?.name || 'Unknown Driver';
+
+
     return (
         <div className="driver-lap-analysis">
              <div className="driver-selection">
@@ -161,6 +180,25 @@ const DriverLapAnalysis = () => {
                     )}
                 </div>
             </div>
+
+            {comparison && (
+                <div className="comparison-summary">
+                    <h3>Comparison Summary</h3>
+                    <p className={comparison.sector1 > 0 ? "faster" : ""}>
+                        Sector 1: {comparison.sector1 > 0 ? `Driver 2 faster by ${Math.abs(comparison.sector1)}s` : `Driver 1 faster by ${Math.abs(comparison.sector1)}s`}
+                    </p>
+                    <p className={comparison.sector2 > 0 ? "faster" : ""}>
+                        Sector 2: {comparison.sector2 > 0 ? `Driver 2 faster by ${Math.abs(comparison.sector2)}s` : `Driver 1 faster by ${Math.abs(comparison.sector2)}s`}
+                    </p>
+                    <p className={comparison.sector3 > 0 ? "faster" : ""}>
+                        Sector 3: {comparison.sector3 > 0 ? `Driver 2 faster by ${Math.abs(comparison.sector3)}s` : `Driver 1 faster by ${Math.abs(comparison.sector3)}s`}
+                    </p>
+                    <p className={comparison.total > 0 ? "faster" : ""}>
+                        Total Lap: {comparison.total > 0 ? `Driver 2 faster by ${Math.abs(comparison.total)}s overall` : `Driver 1 faster by ${Math.abs(comparison.total)}s overall`}
+                    </p>
+                </div>
+            )}
+
 
             <div className="lap-navigation">
                 <button onClick={() => handleLapChange(-1)} disabled={currentLap-1 <= 1}>

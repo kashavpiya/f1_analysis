@@ -54,3 +54,54 @@
 .compare-btn:hover {
     background-color: #2795d9;
 }
+/* Comparison Summary Container */
+.comparison-summary {
+    background-color: #2c2c2c; /* Dark background for the summary */
+    color: #ffffff; /* White text for readability */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding around the content */
+    margin: 20px 0; /* Space around the summary */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+/* Heading Style */
+.comparison-summary h3 {
+    margin: 0 0 10px; /* Margin below the heading */
+    font-size: 1.5rem; /* Larger font size for the heading */
+    border-bottom: 2px solid #4caf50; /* Bottom border for emphasis */
+    padding-bottom: 5px; /* Padding below the heading */
+}
+
+/* Paragraph Style */
+.comparison-summary p {
+    font-size: 1rem; /* Base font size for paragraphs */
+    margin: 5px 0; /* Margin between paragraphs */
+}
+
+/* Conditional Formatting for Faster Driver */
+.comparison-summary p {
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.comparison-summary p:has(span.faster) {
+    background-color: rgba(76, 175, 80, 0.1); /* Light green background for the faster driver */
+    border-left: 4px solid #4caf50; /* Left border for emphasis */
+    padding: 5px; /* Padding for better spacing */
+}
+
+/* Add a hover effect for better interaction */
+.comparison-summary p:hover {
+    background-color: rgba(76, 175, 80, 0.2); /* Darker green on hover */
+}
+
+
+.lap-navigation {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space items evenly */
+    align-items: center; /* Center items vertically */
+    background-color: #1e1e1e; /* Dark background for the navigation */
+    padding: 15px 20px; /* Padding around the content */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    margin: 20px; /* Space around the navigation */
+}
