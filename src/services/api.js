@@ -42,3 +42,23 @@ export const getDriverLapData = async (driverNumber, lapNumber) => {
     throw error;
   }
 };
+
+export const getDriverInfo = async (driverNumber) => {
+  try {
+      const sessionData = await getLatestSession(); // Await the result of getLatestSession
+      const sessionKey = sessionData.session_key; // Access the session key
+      console.log('Session Key:', sessionKey);
+      const response = await axios.get(`${API_URL}/drivers`, {
+          params: {
+              driver_number: driverNumber,  // Passing driver_number to the API
+              session_key: sessionKey  // You can dynamically fetch session_key if needed
+          },
+      });
+
+      console.log(response.data);
+      return response.data;  // Returns driver info like name, headshot URL, etc.
+  } catch (error) {
+      console.error("Error fetching driver info:", error);
+      throw error;
+  }
+};

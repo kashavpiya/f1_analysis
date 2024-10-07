@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getDriverLapData } from '../services/api';
+import { getDriverLapData, getDriverInfo } from '../services/api';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import './DriverLapAnalysis.css';
@@ -35,9 +35,11 @@ const DriverLapAnalysis = () => {
     const [loadingDriver1, setLoadingDriver1] = useState(true);
     const [errorDriver1, setErrorDriver1] = useState(null);
 
+
     const [lapDataDriver2, setLapDataDriver2] = useState(null);
     const [loadingDriver2, setLoadingDriver2] = useState(true);
     const [errorDriver2, setErrorDriver2] = useState(null);
+
 
     const [currentLap, setCurrentLap] = useState(2);
     const [selectedDriver1, setSelectedDriver1] = useState(drivers[0].id);
