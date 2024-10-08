@@ -105,3 +105,15 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
     margin: 20px; /* Space around the navigation */
 }
+
+.driver-headshot {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.driver-info {
+    display: flex;
+    align-items: center;
+}

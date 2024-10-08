@@ -7,26 +7,26 @@ import Loader from './Loader'; // Assuming you create a loader component
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const drivers = [
-    { id: 1, name: "Max Verstappen" },
-    { id: 11, name: "Sergio Perez"},
-    { id: 4, name: "Lando Norris" },
-    { id: 81, name: "Oscar Piastri"},
-    { id: 44, name: "Lewis Hamilton" },
-    { id: 63, name: "George Russell" },
-    { id: 16, name: "Charles Leclerc" },
-    { id: 55, name: "Carlos Sainz Jr" },
-    { id: 14, name: "Fernando Alonso" },
-    { id: 18, name: "Lance Stroll" },
-    { id: 23, name: "Alex Albon" },
-    { id: 43, name: "Franco Colapinto" },
-    { id: 3, name: "Daniel Ricciardo" },
-    { id: 22, name: "Yuki Tsunoda" },
-    { id: 24, name: "Guanyu Zhou" },
-    { id: 77, name: "Valtteri Bottas" },
-    { id: 20, name: "Kevin Magnussen" },
-    { id: 27, name: "Nico Hülkenberg" },
-    { id: 10, name: "Pierre Gasly" },
-    { id: 31, name: "Esteban Ocon" },
+    { id: 1, name: "Max Verstappen", img: require('../assets/maxver01.png') },
+    { id: 11, name: "Sergio Perez", img: require('../assets/serper01.png')},
+    { id: 4, name: "Lando Norris" , img: require('../assets/lannor01.png')},
+    { id: 81, name: "Oscar Piastri", img: require('../assets/oscpia01.png')},
+    { id: 44, name: "Lewis Hamilton" , img: require('../assets/lewham01.png')},
+    { id: 63, name: "George Russell", img: require('../assets/georus01.png') },
+    { id: 16, name: "Charles Leclerc", img: require('../assets/chalec01.png') },
+    { id: 55, name: "Carlos Sainz Jr", img: require('../assets/carsai01.png') },
+    { id: 14, name: "Fernando Alonso" , img: require('../assets/feralo01.png')},
+    { id: 18, name: "Lance Stroll", img: require('../assets/lanstr01.png') },
+    { id: 23, name: "Alex Albon", img: require('../assets/alealb01.png') },
+    { id: 43, name: "Franco Colapinto", img: require('../assets/fracol01.png') },
+    { id: 3, name: "Daniel Ricciardo", img: require('../assets/danric01.png') },
+    { id: 22, name: "Yuki Tsunoda", img: require('../assets/yuktsu01.png') },
+    { id: 24, name: "Guanyu Zhou", img: require('../assets/guazho01.png') },
+    { id: 77, name: "Valtteri Bottas", img: require('../assets/valbot01.png') },
+    { id: 20, name: "Kevin Magnussen", img: require('../assets/kevmag01.png') },
+    { id: 27, name: "Nico Hülkenberg", img: require('../assets/nichul01.png') },
+    { id: 10, name: "Pierre Gasly", img: require('../assets/piegas01.png') },
+    { id: 31, name: "Esteban Ocon", img: require('../assets/estoco01.png') },
     
 ];
 
@@ -155,6 +155,7 @@ const DriverLapAnalysis = () => {
                             label={drivers.find(d => d.id === selectedDriver1).name}
                             lapData={lapDataDriver1}
                             chartData={chartData(lapDataDriver1, drivers.find(d => d.id === selectedDriver1).name)}
+                            imgSrc={drivers.find(d => d.id === selectedDriver1).img}
                         />
                     ) : (
                         <p>No lap data available.</p>
@@ -170,6 +171,7 @@ const DriverLapAnalysis = () => {
                             label={drivers.find(d => d.id === selectedDriver2).name}
                             lapData={lapDataDriver2}
                             chartData={chartData(lapDataDriver2, drivers.find(d => d.id === selectedDriver2).name)}
+                            imgSrc={drivers.find(d => d.id === selectedDriver2).img}
                         />
                     ) : (
                         <p>No lap data available.</p>
@@ -208,9 +210,10 @@ const DriverLapAnalysis = () => {
     );
 };
 
-const LapDataDisplay = ({ label, lapData, chartData }) => (
+const LapDataDisplay = ({ label, lapData, chartData, imgSrc }) => (
     <div>
         <h2>Lap {lapData.lap_number - 1}</h2>
+        <img src={imgSrc} alt={label} className="driver-headshot" />
         <p>{label}</p>
         <p>Total Lap Duration: {lapData.lap_duration}s</p>
         <div className="chart-container">
