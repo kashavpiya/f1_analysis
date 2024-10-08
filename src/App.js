@@ -5,7 +5,7 @@ import './App.css';
 const App = () => {
   return (
     <div className="App">
-      <h1 className='title'>F1 Singapore GP Lap by Lap</h1>
+      <h1 className='title'>F1 Lap by Lap</h1>
       <DriverLapAnalysis/>
     </div>
   );

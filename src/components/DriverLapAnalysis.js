@@ -6,6 +6,13 @@ import './DriverLapAnalysis.css';
 import Loader from './Loader'; // Assuming you create a loader component
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
+const tracks = [
+    { country_name: 'Singapore', track_name: "Singapore"},
+    { country_name: 'Azerbaijan', track_name: 'Baku'},
+    { country_name: 'Netherlands', track_name: 'Zandvoort'},
+    { country_name: 'Belgium', track_name: 'Belgium'},
+    { country_name: 'Hungary', track_name: 'Hungary'},
+];
 const drivers = [
     { id: 1, name: "Max Verstappen", img: require('../assets/maxver01.png') },
     { id: 11, name: "Sergio Perez", img: require('../assets/serper01.png')},
@@ -27,6 +34,8 @@ const drivers = [
     { id: 27, name: "Nico Hülkenberg", img: require('../assets/nichul01.png') },
     { id: 10, name: "Pierre Gasly", img: require('../assets/piegas01.png') },
     { id: 31, name: "Esteban Ocon", img: require('../assets/estoco01.png') },
+    { id: 2, name: "Logan Sargeant", img: require('../assets/logsar01.png') },
+    { id: 87, name: "Oliver Bearman", img: require('../assets/olibea01.png') },
     
 ];
 
@@ -39,16 +48,16 @@ const DriverLapAnalysis = () => {
     const [lapDataDriver2, setLapDataDriver2] = useState(null);
     const [loadingDriver2, setLoadingDriver2] = useState(true);
     const [errorDriver2, setErrorDriver2] = useState(null);
-
+    const [loadingTrack, setLoadingTrack] = useState(true);
 
     const [currentLap, setCurrentLap] = useState(2);
     const [selectedDriver1, setSelectedDriver1] = useState(drivers[0].id);
     const [selectedDriver2, setSelectedDriver2] = useState(drivers[1].id);
-
+    const [selectedTrack, setSelectedTrack] = useState(tracks[0].country_name);
     // Fetch lap data for the selected driver
-    const fetchLapData = async (driverId, setLapData, setLoading, setError) => {
+    const fetchLapData = async (driverId, setLapData, setLoading, setError, selectedTrack) => {
         try {
-            const result = await getDriverLapData(driverId, currentLap);
+            const result = await getDriverLapData(driverId, currentLap, selectedTrack);
             if (result && result.length > 0) {
                 const lap = result[0];
                 const relevantLapData = {
@@ -60,7 +69,7 @@ const DriverLapAnalysis = () => {
                 };
                 setLapData(relevantLapData);
             } else {
-                throw new Error('No data found for the lap');
+                throw new Error('No Lap Data Found');
             }
         } catch (error) {
             setError(error.message);
@@ -74,10 +83,11 @@ const DriverLapAnalysis = () => {
         setLoadingDriver2(true);
         setErrorDriver1(null);
         setErrorDriver2(null);
+        setLoadingTrack(true);
         
-        fetchLapData(selectedDriver1, setLapDataDriver1, setLoadingDriver1, setErrorDriver1);
-        fetchLapData(selectedDriver2, setLapDataDriver2, setLoadingDriver2, setErrorDriver2);
-    }, [currentLap, selectedDriver1, selectedDriver2]);
+        fetchLapData(selectedDriver1, setLapDataDriver1, setLoadingDriver1, setErrorDriver1, selectedTrack);
+        fetchLapData(selectedDriver2, setLapDataDriver2, setLoadingDriver2, setErrorDriver2, selectedTrack);
+    }, [currentLap, selectedDriver1, selectedDriver2, selectedTrack]);
 
     // Chart data for displaying lap durations
     const chartData = (data, label) => ({
@@ -110,6 +120,10 @@ const DriverLapAnalysis = () => {
         setSelectedDriver2(Number(event.target.value));
     };
 
+    const handleTrackChange = (event) => {
+        setSelectedTrack(event.target.value); 
+    };
+
     const calculateComparison = () => {
         if (!lapDataDriver1 || !lapDataDriver2) return null;
 
@@ -127,6 +141,14 @@ const DriverLapAnalysis = () => {
 
     return (
         <div className="driver-lap-analysis">
+            <div className='track-selection'>
+                <label>Select GP: </label>
+                <select value={selectedTrack} onChange={handleTrackChange} className="dropdown">
+                    {tracks.map(track => (
+                        <option key={track.track_name} value={track.country_name}>{track.track_name}</option>
+                    ))}
+                </select>
+            </div>
              <div className="driver-selection">
                 <label>Select Driver 1: </label>
                 <select value={selectedDriver1} onChange={handleDriver1Change} className="dropdown">

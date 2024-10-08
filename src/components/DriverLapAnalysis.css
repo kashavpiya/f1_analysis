@@ -31,6 +31,13 @@
     gap: 20px;
 }
 
+.track-selection {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
 .dropdown {
     padding: 5px;
     font-size: 16px;

@@ -3,11 +3,11 @@ import axios from 'axios';
 const API_URL = 'https://api.openf1.org/v1';
 
 // Get the latest session (race)
-export const getLatestSession = async () => {
+export const getLatestSession = async (selectedTrack) => {
   try {
     const response = await axios.get(`${API_URL}/sessions`, {
       params: {
-        country_name: 'Singapore',
+        country_name: selectedTrack,
         session_name: 'Race',
         year: 2024
       }
@@ -21,10 +21,10 @@ export const getLatestSession = async () => {
 };
 
 // Get driver lap data
-export const getDriverLapData = async (driverNumber, lapNumber) => {
+export const getDriverLapData = async (driverNumber, lapNumber, selectedTrack) => {
   try {
     // Await the session data properly
-    const sessionData = await getLatestSession(); // Await the result of getLatestSession
+    const sessionData = await getLatestSession(selectedTrack); // Await the result of getLatestSession
     const sessionKey = sessionData.session_key; // Access the session key
     console.log('Session Key:', sessionKey);
 
