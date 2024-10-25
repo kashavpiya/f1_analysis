@@ -12,6 +12,7 @@ const tracks = [
     { country_name: 'Netherlands', track_name: 'Zandvoort'},
     { country_name: 'Belgium', track_name: 'Belgium'},
     { country_name: 'Hungary', track_name: 'Hungary'},
+    { country_name: 'Mexico', track_name: 'Mexico'},
 ];
 const drivers = [
     { id: 1, name: "Max Verstappen", img: require('../assets/maxver01.png') },
