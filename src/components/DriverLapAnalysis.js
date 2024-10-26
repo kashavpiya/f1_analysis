@@ -7,6 +7,7 @@ import Loader from './Loader'; // Assuming you create a loader component
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const tracks = [
+    { country_name: 'Austria', track_name: 'Austria'},
     { country_name: 'Singapore', track_name: "Singapore"},
     { country_name: 'Azerbaijan', track_name: 'Baku'},
     { country_name: 'Netherlands', track_name: 'Zandvoort'},
